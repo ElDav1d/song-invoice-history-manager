@@ -6,7 +6,7 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "test": "mocha 'src/test/**/*.test.ts' --import=tsx/esm",
+    "test": "mocha \"src/**/__tests__/**/*.test.ts\" --import=tsx/esm",
     "lint": "eslint . --ext .ts --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write \"src/**/*.{ts,js,json,md}\"",
