@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import { it, expect } from 'vitest';
 import App from '../App';
 
@@ -12,4 +12,16 @@ it('should render the app title', () => {
   expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
     'Song Invoice History Manager'
   );
+});
+
+it('should render a songs table with the correct headers', () => {
+  render(<App />);
+
+  const songsTable = screen.getByRole('table', { name: /songs/i });
+
+  expect(within(songsTable).getByRole('columnheader', { name: 'ID' })).toBeInTheDocument();
+  expect(within(songsTable).getByRole('columnheader', { name: 'Song name' })).toBeInTheDocument();
+  expect(within(songsTable).getByRole('columnheader', { name: 'Author' })).toBeInTheDocument();
+  expect(within(songsTable).getByRole('columnheader', { name: 'Progress' })).toBeInTheDocument();
+  expect(within(songsTable).getByRole('columnheader', { name: '' })).toBeInTheDocument();
 });
