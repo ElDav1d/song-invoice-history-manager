@@ -1,17 +1,29 @@
+import {
+  TableContainer,
+  Paper,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+} from '@mui/material';
+
 const SongsTable = () => {
   return (
-    <table aria-label="songs">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Song name</th>
-          <th>Author</th>
-          <th>Progress</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>{/* Render song rows here */}</tbody>
-    </table>
+    <TableContainer component={Paper}>
+      <Table aria-label="songs">
+        <TableHead>
+          <TableRow>
+            <TableCell>ID</TableCell>
+            <TableCell>Song name</TableCell>
+            <TableCell>Author</TableCell>
+            <TableCell>Progress</TableCell>
+            <TableCell></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>{/* Render song rows here */}</TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 
