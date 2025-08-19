@@ -4,9 +4,15 @@ import App from '../App';
 import { mockedSongs } from './mocks';
 import { Provider } from 'react-redux';
 import { store } from '../../shared/store';
-import { useGetSongsQuery } from '@/features/songs-table/services/songsApi';
+import { useGetSongsQuery } from '@/features/songs-table/application/hooks/songsApi';
 
-vi.mock('@/features/songs-table/services/songsApi', () => ({
+// Mock the vanilla service
+vi.mock('@/features/songs-table/domain/services', () => ({
+  fetchSongs: vi.fn(),
+}));
+
+// Mock the RTK Query API
+vi.mock('@/features/songs-table/application/hooks/songsApi', () => ({
   default: {
     reducerPath: 'songsApi',
     reducer: (state = {}) => state,

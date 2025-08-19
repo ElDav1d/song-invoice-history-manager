@@ -1,6 +1,6 @@
 import { Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useGetSongsQuery } from './services/songsApi';
+import { useGetSongsQuery } from './hooks/songsApi';
 
 const SongsTable = () => {
   const { data: songs, isLoading, isError } = useGetSongsQuery();

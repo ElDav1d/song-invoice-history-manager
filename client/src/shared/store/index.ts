@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import dummyReducer from './dummySlice';
-import songsApi from '@/features/songs-table/services/songsApi';
+import songsApi from '@/features/songs-table/application/hooks/songsApi';
 
 export const store = configureStore({
   reducer: {
