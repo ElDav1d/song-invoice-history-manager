@@ -16,6 +16,11 @@ afterAll(() => {
   vi.restoreAllMocks();
 });
 
+it('matches snapshot', () => {
+  const { container } = render(<App />);
+  expect(container).toMatchSnapshot();
+});
+
 it('should render the app title', () => {
   render(<App />);
 
