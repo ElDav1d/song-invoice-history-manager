@@ -1,44 +1,30 @@
 import { Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
-import { Song } from '@/features/songs-table/entities/Song';
-import { useState, useEffect } from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useGetSongsQuery } from './services/songsApi';
 
 const SongsTable = () => {
-  const [songs, setSongs] = useState<Song[]>([]);
-
-  useEffect(() => {
-    const fetchSongs = async () => {
-      const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
-      const response = await fetch(`${apiBaseUrl}/songs`);
-
-      if (!response.ok) {
-        console.error('Failed to fetch songs');
-        return;
-      }
-
-      const data = await response.json();
-
-      setSongs(data);
-    };
-    fetchSongs();
-  }, []);
+  const { data: songs, isLoading, isError } = useGetSongsQuery();
 
   return (
     <>
       <h2 id="songs-table-heading">Songs</h2>
       <section aria-labelledby="songs-table-heading">
-        <Table aria-label="songs-table">
-          <TableHead>
-            <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Song name</TableCell>
-              <TableCell>Author</TableCell>
-              <TableCell>Progress</TableCell>
-              <TableCell aria-label="invoice-button-placeholder"></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {songs.length > 0 &&
-              songs.map(({ id, name, author, progress }) => (
+        {isLoading && <CircularProgress aria-label="loading" />}
+        {isError && <h3>Failed to fetch songs</h3>}
+        {songs?.length === 0 && <h3>No songs available</h3>}
+        {songs && songs.length > 0 && (
+          <Table aria-label="songs-table">
+            <TableHead>
+              <TableRow>
+                <TableCell>ID</TableCell>
+                <TableCell>Song name</TableCell>
+                <TableCell>Author</TableCell>
+                <TableCell>Progress</TableCell>
+                <TableCell aria-label="invoice-button-placeholder"></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {songs.map(({ id, name, author, progress }) => (
                 <TableRow key={id}>
                   <TableCell>{id}</TableCell>
                   <TableCell>{name}</TableCell>
@@ -49,8 +35,9 @@ const SongsTable = () => {
                   </TableCell>
                 </TableRow>
               ))}
-          </TableBody>
-        </Table>
+            </TableBody>
+          </Table>
+        )}
       </section>
     </>
   );
