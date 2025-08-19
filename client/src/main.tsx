@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { store } from '@/shared/store';
+import { store } from '@/shared/application/store';
 import App from '@/pages/App';
 
 const theme = createTheme();

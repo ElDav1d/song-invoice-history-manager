@@ -3,7 +3,7 @@ import { it, expect, beforeEach, vi } from 'vitest';
 import App from '../App';
 import { mockedSongs } from './mocks';
 import { Provider } from 'react-redux';
-import { store } from '../../shared/store';
+import { store } from '../../shared/application/store';
 import { useGetSongsQuery } from '@/features/songs-table/application/hooks/songsApi';
 
 // Mock the vanilla service
