@@ -47,15 +47,15 @@ const SongsTable = () => {
         <Table aria-label="songs-table" component={Paper}>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Song Name</TableCell>
-              <TableCell>Author</TableCell>
-              <TableCell>Progress</TableCell>
+              <TableCell size="small">ID</TableCell>
+              <TableCell size="small">Song Name</TableCell>
+              <TableCell size="small">Author</TableCell>
+              <TableCell size="small">Progress</TableCell>
               <TableCell aria-label="invoice-button-placeholder"></TableCell>
               {hasIssuedInvoices && (
                 <>
-                  <TableCell>Last Invoice Issue</TableCell>
-                  <TableCell>Issuance Date</TableCell>
+                  <TableCell size="small">Last Invoice Issue</TableCell>
+                  <TableCell size="small">Issuance Date</TableCell>
                 </>
               )}
             </TableRow>
@@ -63,19 +63,23 @@ const SongsTable = () => {
           <TableBody>
             {sonsgsState.map(({ id, name, author, progress, lastClickProgress, lastClickDate }) => (
               <TableRow key={id}>
-                <TableCell>{id}</TableCell>
-                <TableCell>{name}</TableCell>
-                <TableCell>{author}</TableCell>
-                <TableCell>{formatProgress(progress)}</TableCell>
-                <TableCell>
-                  <Button variant="contained" onClick={() => handleIssueInvoice(id, progress)}>
+                <TableCell size="small">{id}</TableCell>
+                <TableCell size="small">{name}</TableCell>
+                <TableCell size="small">{author}</TableCell>
+                <TableCell size="small">{formatProgress(progress)}</TableCell>
+                <TableCell size="small">
+                  <Button
+                    variant="contained"
+                    size="small"
+                    onClick={() => handleIssueInvoice(id, progress)}
+                  >
                     Issue Invoice
                   </Button>
                 </TableCell>
                 {hasIssuedInvoices && (
                   <>
-                    <TableCell>{formatProgress(lastClickProgress)}</TableCell>
-                    <TableCell>{formatDate(lastClickDate)}</TableCell>
+                    <TableCell size="small">{formatProgress(lastClickProgress)}</TableCell>
+                    <TableCell size="small">{formatDate(lastClickDate)}</TableCell>
                   </>
                 )}
               </TableRow>

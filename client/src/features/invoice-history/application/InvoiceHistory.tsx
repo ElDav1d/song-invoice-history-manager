@@ -7,10 +7,10 @@ const InvoiceHistory = () => {
       <Table aria-label="invoice-history-table" component={Paper}>
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Author</TableCell>
-            <TableCell>Song Name</TableCell>
-            <TableCell>Progress</TableCell>
+            <TableCell size="small">Date</TableCell>
+            <TableCell size="small">Author</TableCell>
+            <TableCell size="small">Song Name</TableCell>
+            <TableCell size="small">Progress</TableCell>
           </TableRow>
         </TableHead>
       </Table>
