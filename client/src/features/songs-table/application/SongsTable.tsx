@@ -3,16 +3,23 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useGetSongsQuery } from '@/features/songs-table/application/hooks/songsApi';
 import { useSongsActions } from '@/features/songs-table/application/hooks/useSongsActions';
 import { useEffect } from 'react';
+import { useAppSelector } from '@/shared/application/hooks';
 
 const SongsTable = () => {
-  const { data: songs, isLoading, isError } = useGetSongsQuery();
+  const { data: fetchedSongs, isLoading, isError } = useGetSongsQuery();
   const { issueInvoice, addSongs } = useSongsActions();
+  const { songs: sonsgsState } = useAppSelector((state) => state.songs);
+
+  // Check if any song has issued invoices
+  const hasIssuedInvoices = sonsgsState?.some(
+    (song) => song.lastClickDate && song.lastClickProgress !== undefined
+  );
 
   useEffect(() => {
-    if (songs) {
-      addSongs(songs);
+    if (sonsgsState.length === 0 && fetchedSongs) {
+      addSongs(fetchedSongs);
     }
-  }, [songs, addSongs]);
+  }, [sonsgsState, addSongs]);
 
   const handleIssueInvoice = (id: string, progressAtIssue: number) => {
     issueInvoice({ id, progressAtIssue });
@@ -24,8 +31,8 @@ const SongsTable = () => {
       <section aria-labelledby="songs-table-heading">
         {isLoading && <CircularProgress aria-label="loading" />}
         {isError && <h3>Failed to fetch songs</h3>}
-        {songs?.length === 0 && <h3>No songs available</h3>}
-        {songs && songs.length > 0 && (
+        {sonsgsState?.length === 0 && <h3>No songs available</h3>}
+        {sonsgsState && sonsgsState.length > 0 && (
           <Table aria-label="songs-table">
             <TableHead>
               <TableRow>
@@ -34,10 +41,16 @@ const SongsTable = () => {
                 <TableCell>Author</TableCell>
                 <TableCell>Progress</TableCell>
                 <TableCell aria-label="invoice-button-placeholder"></TableCell>
+                {hasIssuedInvoices && (
+                  <>
+                    <TableCell>Last Invoice Issue</TableCell>
+                    <TableCell>Last Issue Date</TableCell>
+                  </>
+                )}
               </TableRow>
             </TableHead>
             <TableBody>
-              {songs.map(({ id, name, author, progress }) => (
+              {sonsgsState.map(({ id, name, author, progress }) => (
                 <TableRow key={id}>
                   <TableCell>{id}</TableCell>
                   <TableCell>{name}</TableCell>

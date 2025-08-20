@@ -1,6 +1,7 @@
-import { screen, within } from '@testing-library/react';
+import { screen, waitFor, within } from '@testing-library/react';
 import { it, expect, beforeEach, vi } from 'vitest';
 import { renderApp, mockQueryStates } from './setup';
+import userEvent from '@testing-library/user-event';
 
 beforeEach(() => {
   vi.restoreAllMocks();
@@ -78,4 +79,28 @@ it('should render songs rows with their data correctly', async () => {
   expect(within(row2).getByText('Anti-Hero')).toBeInTheDocument();
   expect(within(row2).getByText('Taylor Swift')).toBeInTheDocument();
   expect(within(row2).getByRole('button', { name: /issue invoice/i })).toBeInTheDocument();
+});
+
+it('should render two new columns after issue an invoice', async () => {
+  const user = userEvent.setup();
+  mockQueryStates.withData();
+
+  renderApp();
+
+  const songsSection = screen.getByRole('region', { name: /songs/i });
+  const songsTable = await within(songsSection).findByRole('table', { name: /songs-table/i });
+
+  const issueInvoiceButtons = within(songsTable).getAllByRole('button', { name: /issue invoice/i });
+  const firstIssueButton = issueInvoiceButtons[0];
+
+  await user.click(firstIssueButton);
+
+  await waitFor(() => {
+    expect(
+      within(songsTable).getByRole('columnheader', { name: /last invoice issue/i })
+    ).toBeInTheDocument();
+    expect(
+      within(songsTable).getByRole('columnheader', { name: /last issue date/i })
+    ).toBeInTheDocument();
+  });
 });
