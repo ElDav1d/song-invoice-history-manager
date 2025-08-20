@@ -2,13 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Song } from '@/features/songs-table/domain/entities/Song';
 import { IssueInvoicePayload } from '@/features/songs-table/application/hooks/useSongsActions';
 
-interface SongState extends Song {
-  lastClickDate?: string;
-  lastClickProgress?: number;
-}
-
 interface SongsSliceState {
-  songs: SongState[];
+  songs: Song[];
 }
 
 const initialState: SongsSliceState = (() => {
@@ -30,7 +25,10 @@ const songsSlice = createSlice({
   initialState,
   reducers: {
     addNewSongs: (state, action: PayloadAction<Song[]>) => {
-      state.songs.push(...action.payload);
+      const existingIds = new Set(state.songs.map((song) => song.id));
+      const newSongs = action.payload.filter((song) => !existingIds.has(song.id));
+
+      state.songs.push(...newSongs);
 
       localStorage.setItem('__songs__state__', JSON.stringify(state));
     },

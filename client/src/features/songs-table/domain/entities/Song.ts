@@ -3,4 +3,6 @@ export interface Song {
   name: string;
   author: string;
   progress: number;
+  lastClickDate?: string;
+  lastClickProgress?: number;
 }
