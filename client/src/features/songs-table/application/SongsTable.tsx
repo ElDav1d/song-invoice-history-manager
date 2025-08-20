@@ -1,4 +1,4 @@
-import { Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
+import { Table, TableHead, TableRow, TableCell, TableBody, Button, Paper } from '@mui/material';
 
 import { useGetSongsQuery } from '@/features/songs-table/application/hooks/songsApi';
 import { useSongsActions } from '@/features/songs-table/application/hooks/useSongsActions';
@@ -36,58 +36,54 @@ const SongsTable = () => {
   };
 
   return (
-    <>
+    <section aria-labelledby="songs-table-heading">
       <h2 id="songs-table-heading">Songs</h2>
-      <section aria-labelledby="songs-table-heading">
-        <SongsTableStatus
-          isLoading={isLoading}
-          isError={isError}
-          isEmpty={!isLoading && !isError && sonsgsState?.length === 0}
-        />
-        {sonsgsState && sonsgsState.length > 0 && !isLoading && !isError && (
-          <Table aria-label="songs-table">
-            <TableHead>
-              <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell>Song Name</TableCell>
-                <TableCell>Author</TableCell>
-                <TableCell>Progress</TableCell>
-                <TableCell aria-label="invoice-button-placeholder"></TableCell>
+      <SongsTableStatus
+        isLoading={isLoading}
+        isError={isError}
+        isEmpty={!isLoading && !isError && sonsgsState?.length === 0}
+      />
+      {sonsgsState && sonsgsState.length > 0 && !isLoading && !isError && (
+        <Table aria-label="songs-table" component={Paper}>
+          <TableHead>
+            <TableRow>
+              <TableCell>ID</TableCell>
+              <TableCell>Song Name</TableCell>
+              <TableCell>Author</TableCell>
+              <TableCell>Progress</TableCell>
+              <TableCell aria-label="invoice-button-placeholder"></TableCell>
+              {hasIssuedInvoices && (
+                <>
+                  <TableCell>Last Invoice Issue</TableCell>
+                  <TableCell>Last Issue Date</TableCell>
+                </>
+              )}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {sonsgsState.map(({ id, name, author, progress, lastClickProgress, lastClickDate }) => (
+              <TableRow key={id}>
+                <TableCell>{id}</TableCell>
+                <TableCell>{name}</TableCell>
+                <TableCell>{author}</TableCell>
+                <TableCell>{formatProgress(progress)}</TableCell>
+                <TableCell>
+                  <Button variant="contained" onClick={() => handleIssueInvoice(id, progress)}>
+                    Issue Invoice
+                  </Button>
+                </TableCell>
                 {hasIssuedInvoices && (
                   <>
-                    <TableCell>Last Invoice Issue</TableCell>
-                    <TableCell>Last Issue Date</TableCell>
+                    <TableCell>{formatProgress(lastClickProgress)}</TableCell>
+                    <TableCell>{formatDate(lastClickDate)}</TableCell>
                   </>
                 )}
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {sonsgsState.map(
-                ({ id, name, author, progress, lastClickProgress, lastClickDate }) => (
-                  <TableRow key={id}>
-                    <TableCell>{id}</TableCell>
-                    <TableCell>{name}</TableCell>
-                    <TableCell>{author}</TableCell>
-                    <TableCell>{formatProgress(progress)}</TableCell>
-                    <TableCell>
-                      <button onClick={() => handleIssueInvoice(id, progress)}>
-                        Issue Invoice
-                      </button>
-                    </TableCell>
-                    {hasIssuedInvoices && (
-                      <>
-                        <TableCell>{formatProgress(lastClickProgress)}</TableCell>
-                        <TableCell>{formatDate(lastClickDate)}</TableCell>
-                      </>
-                    )}
-                  </TableRow>
-                )
-              )}
-            </TableBody>
-          </Table>
-        )}
-      </section>
-    </>
+            ))}
+          </TableBody>
+        </Table>
+      )}
+    </section>
   );
 };
 

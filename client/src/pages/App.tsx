@@ -1,14 +1,16 @@
 import { SongsTable } from '@/features/songs-table';
+import { Container } from '@mui/material';
+
 // Since there's no need for routing then App is considered as a page for outside-in testing purposes
 const App = () => {
   return (
     <>
-      <header>
+      <Container maxWidth="lg" component="header">
         <h1>Song Invoice History Manager</h1>
-      </header>
-      <main>
+      </Container>
+      <Container maxWidth="lg" component="main">
         <SongsTable />
-      </main>
+      </Container>
     </>
   );
 };
