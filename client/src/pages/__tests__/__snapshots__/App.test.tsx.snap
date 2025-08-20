@@ -2,23 +2,28 @@
 
 exports[`matches snapshot 1`] = `
 <div>
-  <header>
+  <header
+    class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
+  >
     <h1>
       Song Invoice History Manager
     </h1>
   </header>
-  <main>
-    <h2
-      id="songs-table-heading"
-    >
-      Songs
-    </h2>
+  <main
+    class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
+  >
     <section
       aria-labelledby="songs-table-heading"
     >
-      <table
+      <h2
+        id="songs-table-heading"
+      >
+        Songs
+      </h2>
+      <div
         aria-label="songs-table"
-        class="MuiTable-root css-rqglhn-MuiTable-root"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiTable-root css-13vb0xd-MuiPaper-root-MuiTable-root"
+        role="table"
       >
         <thead
           class="MuiTableHead-root css-15wwp11-MuiTableHead-root"
@@ -36,7 +41,7 @@ exports[`matches snapshot 1`] = `
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1ygcj2i-MuiTableCell-root"
               scope="col"
             >
-              Song name
+              Song Name
             </th>
             <th
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1ygcj2i-MuiTableCell-root"
@@ -81,13 +86,20 @@ exports[`matches snapshot 1`] = `
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
             >
-              0.15
+              15%
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
             >
-              <button>
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
                 Issue Invoice
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
               </button>
             </td>
           </tr>
@@ -112,18 +124,25 @@ exports[`matches snapshot 1`] = `
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
             >
-              0.27
+              27%
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
             >
-              <button>
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
                 Issue Invoice
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
               </button>
             </td>
           </tr>
         </tbody>
-      </table>
+      </div>
     </section>
   </main>
 </div>
