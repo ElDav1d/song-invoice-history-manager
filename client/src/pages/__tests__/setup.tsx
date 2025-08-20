@@ -64,7 +64,7 @@ const mockQueryStates = {
       refetch: vi.fn(),
     } as any),
 
-  withData: () =>
+  withNewData: () =>
     vi.mocked(useGetSongsQuery).mockReturnValue({
       data: mockedSongs,
       isLoading: false,

@@ -35,7 +35,7 @@ it('should render a message when no songs are available', async () => {
 });
 
 it('should render a songs table with the correct title and headers', async () => {
-  mockQueryStates.withData();
+  mockQueryStates.withNewData();
 
   renderApp();
 
@@ -52,7 +52,7 @@ it('should render a songs table with the correct title and headers', async () =>
 });
 
 it('should render songs rows with their data correctly', async () => {
-  mockQueryStates.withData();
+  mockQueryStates.withNewData();
 
   renderApp();
 
@@ -83,7 +83,7 @@ it('should render songs rows with their data correctly', async () => {
 
 it('should render two new columns after issue an invoice', async () => {
   const user = userEvent.setup();
-  mockQueryStates.withData();
+  mockQueryStates.withNewData();
 
   renderApp();
 

@@ -1,16 +1,16 @@
 import { Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
+
 import { useGetSongsQuery } from '@/features/songs-table/application/hooks/songsApi';
 import { useSongsActions } from '@/features/songs-table/application/hooks/useSongsActions';
 import { useEffect } from 'react';
 import { useAppSelector } from '@/shared/application/hooks';
+import { SongsTableStatus } from '@/features/songs-table/application/components';
 
 const SongsTable = () => {
   const { data: fetchedSongs, isLoading, isError } = useGetSongsQuery();
   const { issueInvoice, addSongs } = useSongsActions();
   const { songs: sonsgsState } = useAppSelector((state) => state.songs);
 
-  // Check if any song has issued invoices
   const hasIssuedInvoices = sonsgsState?.some(
     (song) => song.lastClickDate && song.lastClickProgress !== undefined
   );
@@ -29,10 +29,12 @@ const SongsTable = () => {
     <>
       <h2 id="songs-table-heading">Songs</h2>
       <section aria-labelledby="songs-table-heading">
-        {isLoading && <CircularProgress aria-label="loading" />}
-        {isError && <h3>Failed to fetch songs</h3>}
-        {sonsgsState?.length === 0 && <h3>No songs available</h3>}
-        {sonsgsState && sonsgsState.length > 0 && (
+        <SongsTableStatus
+          isLoading={isLoading}
+          isError={isError}
+          isEmpty={!isLoading && !isError && sonsgsState?.length === 0}
+        />
+        {sonsgsState && sonsgsState.length > 0 && !isLoading && !isError && (
           <Table aria-label="songs-table">
             <TableHead>
               <TableRow>

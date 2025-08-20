@@ -7,7 +7,7 @@ beforeEach(() => {
 });
 
 it('matches snapshot', () => {
-  mockQueryStates.withData();
+  mockQueryStates.withNewData();
 
   const { container } = renderApp();
   expect(container).toMatchSnapshot();
