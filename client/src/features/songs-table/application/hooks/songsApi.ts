@@ -6,7 +6,7 @@ const songsApi = createApi({
   reducerPath: 'songsApi',
   baseQuery: fetchBaseQuery({
     baseUrl: `${import.meta.env.VITE_API_BASE_URL}`,
-    fetchFn: getSongs,
+    fetchFn: fetchSongsWrapper,
   }),
   keepUnusedDataFor: 0,
   endpoints: (builder) => ({
@@ -16,21 +16,34 @@ const songsApi = createApi({
   }),
 });
 
-async function getSongs(input: RequestInfo | URL, init?: RequestInit) {
+async function fetchSongsWrapper(input: RequestInfo | URL, init?: RequestInit) {
   // Use our vanilla service for songs endpoint
   if (
     input === `${import.meta.env.VITE_API_BASE_URL}/songs` &&
     (!init?.method || init.method === 'GET')
   ) {
+    return getAllSongs();
+  }
+
+  // Fallback to default fetch for other endpoints
+  return fetch(input, init);
+}
+
+async function getAllSongs() {
+  try {
     const songs = await fetchSongs();
     return new Response(JSON.stringify(songs), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
-  }
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch songs';
 
-  // Fallback to default fetch for other endpoints
-  return fetch(input, init);
+    return new Response(JSON.stringify({ error: errorMessage }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
 }
 
 export const { useGetSongsQuery } = songsApi;
