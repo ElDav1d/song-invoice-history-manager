@@ -3,7 +3,7 @@ import { Song } from '@/features/songs-table/domain/entities/Song';
 import { IssueInvoicePayload } from '@/features/songs-table/application/hooks/useSongsActions';
 
 interface SongState extends Song {
-  lastClickDate?: Date;
+  lastClickDate?: string;
   lastClickProgress?: number;
 }
 
@@ -29,9 +29,14 @@ const songsSlice = createSlice({
   name: 'songs',
   initialState,
   reducers: {
+    addNewSongs: (state, action: PayloadAction<Song[]>) => {
+      state.songs.push(...action.payload);
+
+      localStorage.setItem('__songs__state__', JSON.stringify(state));
+    },
     issueNewInvoice: (state, action: PayloadAction<IssueInvoicePayload>) => {
       const song = state.songs.find((song) => song.id === action.payload.id);
-      const now = new Date();
+      const now = new Date().toISOString();
 
       if (song) {
         song.lastClickDate = now;
@@ -43,5 +48,5 @@ const songsSlice = createSlice({
   },
 });
 
-export const { issueNewInvoice } = songsSlice.actions;
+export const { issueNewInvoice, addNewSongs } = songsSlice.actions;
 export default songsSlice.reducer;

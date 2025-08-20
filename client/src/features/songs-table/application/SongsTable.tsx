@@ -1,9 +1,22 @@
 import { Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useGetSongsQuery } from './hooks/songsApi';
+import { useGetSongsQuery } from '@/features/songs-table/application/hooks/songsApi';
+import { useSongsActions } from '@/features/songs-table/application/hooks/useSongsActions';
+import { useEffect } from 'react';
 
 const SongsTable = () => {
   const { data: songs, isLoading, isError } = useGetSongsQuery();
+  const { issueInvoice, addSongs } = useSongsActions();
+
+  useEffect(() => {
+    if (songs) {
+      addSongs(songs);
+    }
+  }, [songs, addSongs]);
+
+  const handleIssueInvoice = (id: string, progressAtIssue: number) => {
+    issueInvoice({ id, progressAtIssue });
+  };
 
   return (
     <>
@@ -31,7 +44,7 @@ const SongsTable = () => {
                   <TableCell>{author}</TableCell>
                   <TableCell>{progress}</TableCell>
                   <TableCell>
-                    <button>Issue Invoice</button>
+                    <button onClick={() => handleIssueInvoice(id, progress)}>Issue Invoice</button>
                   </TableCell>
                 </TableRow>
               ))}
