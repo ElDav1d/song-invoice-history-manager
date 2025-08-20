@@ -99,7 +99,7 @@ it('should render two new columns after issue an invoice', async () => {
       within(songsTable).getByRole('columnheader', { name: /last invoice issue/i })
     ).toBeInTheDocument();
     expect(
-      within(songsTable).getByRole('columnheader', { name: /last issue date/i })
+      within(songsTable).getByRole('columnheader', { name: /issuance date/i })
     ).toBeInTheDocument();
   });
 });

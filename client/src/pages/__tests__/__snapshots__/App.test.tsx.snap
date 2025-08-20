@@ -144,10 +144,52 @@ exports[`matches snapshot 1`] = `
         </tbody>
       </div>
     </section>
-    <section>
-      <h2>
+    <section
+      aria-labelledby="invoice-history-heading"
+    >
+      <h2
+        id="invoice-history-heading"
+      >
         Invoice History
       </h2>
+      <div
+        aria-label="invoice-history-table"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiTable-root css-13vb0xd-MuiPaper-root-MuiTable-root"
+        role="table"
+      >
+        <thead
+          class="MuiTableHead-root css-15wwp11-MuiTableHead-root"
+        >
+          <tr
+            class="MuiTableRow-root MuiTableRow-head css-1q1u3t4-MuiTableRow-root"
+          >
+            <th
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1ygcj2i-MuiTableCell-root"
+              scope="col"
+            >
+              Date
+            </th>
+            <th
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1ygcj2i-MuiTableCell-root"
+              scope="col"
+            >
+              Author
+            </th>
+            <th
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1ygcj2i-MuiTableCell-root"
+              scope="col"
+            >
+              Song Name
+            </th>
+            <th
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1ygcj2i-MuiTableCell-root"
+              scope="col"
+            >
+              Progress
+            </th>
+          </tr>
+        </thead>
+      </div>
     </section>
   </main>
 </div>

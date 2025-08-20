@@ -55,7 +55,7 @@ const SongsTable = () => {
               {hasIssuedInvoices && (
                 <>
                   <TableCell>Last Invoice Issue</TableCell>
-                  <TableCell>Last Issue Date</TableCell>
+                  <TableCell>Issuance Date</TableCell>
                 </>
               )}
             </TableRow>
