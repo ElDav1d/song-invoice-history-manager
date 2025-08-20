@@ -144,6 +144,11 @@ exports[`matches snapshot 1`] = `
         </tbody>
       </div>
     </section>
+    <section>
+      <h2>
+        Invoice History
+      </h2>
+    </section>
   </main>
 </div>
 `;

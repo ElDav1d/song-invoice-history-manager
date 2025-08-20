@@ -13,7 +13,7 @@ it('should render a loading state when fetching songs', () => {
 
   renderApp();
 
-  const loader = screen.getByRole('progressbar', { name: /loading/i });
+  const loader = screen.getByRole('progressbar', { name: /loading songs/i });
   expect(loader).toBeInTheDocument();
 });
 
@@ -22,8 +22,12 @@ it('should render an error message when fetching songs fails', async () => {
 
   renderApp();
 
-  const errorMessage = await screen.findByRole('heading', { level: 3 });
-  expect(errorMessage).toHaveTextContent(/failed to fetch songs/i);
+  const errorMessage = await screen.findByRole('heading', {
+    level: 3,
+    name: /failed to fetch songs/i,
+  });
+
+  expect(errorMessage).toBeInTheDocument();
 });
 
 it('should render a message when no songs are available', async () => {

@@ -9,7 +9,7 @@ interface SongsTableStatusProps {
 
 const SongsTableStatus: React.FC<SongsTableStatusProps> = ({ isLoading, isError, isEmpty }) => {
   if (isLoading) {
-    return <CircularProgress aria-label="loading" />;
+    return <CircularProgress aria-label="loading songs" />;
   }
   if (isError) {
     return <h3>Failed to fetch songs</h3>;

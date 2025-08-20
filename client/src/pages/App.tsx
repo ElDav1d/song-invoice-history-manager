@@ -1,3 +1,4 @@
+import { InvoiceHistory } from '@/features/invoice-history';
 import { SongsTable } from '@/features/songs-table';
 import { Container } from '@mui/material';
 
@@ -10,6 +11,7 @@ const App = () => {
       </Container>
       <Container maxWidth="lg" component="main">
         <SongsTable />
+        <InvoiceHistory />
       </Container>
     </>
   );
