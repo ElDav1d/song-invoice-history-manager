@@ -40,6 +40,11 @@ const songsSlice = createSlice({
         song.lastClickDate = now;
         song.lastClickProgress = action.payload.progressAtIssue;
 
+        // Simulate progress increase after invoice issuance (add 05%)
+        if (song.progress !== 1) {
+          song.progress = Math.min(action.payload.progressAtIssue + 0.05, 1);
+        }
+
         localStorage.setItem('__songs__state__', JSON.stringify(state));
       }
     },

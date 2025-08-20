@@ -1,7 +1,9 @@
 import { render } from '@testing-library/react';
 import { vi } from 'vitest';
 import { Provider } from 'react-redux';
-import { store } from '../../shared/application/store';
+import { configureStore } from '@reduxjs/toolkit';
+import songsApi from '@/features/songs-table/application/hooks/songsApi';
+import songsReducer from '@/features/songs-table/application/store/slice';
 import App from '../App';
 import { mockedSongs } from './mocks';
 
@@ -26,10 +28,22 @@ vi.mock('@/features/songs-table/application/hooks/songsApi', () => ({
 // Import the mocked hook after the mock
 import { useGetSongsQuery } from '@/features/songs-table/application/hooks/songsApi';
 
-// Helper function to render App with Provider
+// Create a fresh store for each test
+const createTestStore = () => {
+  return configureStore({
+    reducer: {
+      [songsApi.reducerPath]: songsApi.reducer,
+      songs: songsReducer,
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(songsApi.middleware),
+  });
+};
+
+// Helper function to render App with fresh Provider and store
 const renderApp = () => {
+  const testStore = createTestStore();
   return render(
-    <Provider store={store}>
+    <Provider store={testStore}>
       <App />
     </Provider>
   );
