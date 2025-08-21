@@ -1,162 +1,77 @@
-# Monorepo Starter
+# Song Invoice History Manager
 
-A minimal monorepo setup with React client and Node.js service, both configured with TypeScript, ESLint, and Prettier.
+A React + Express monorepo for tracking music production progress and managing invoice generation for songs.
+
+## Features
+
+- Track song progress and issue invoices at completion milestones
+- Persistent state using localStorage with RTK middleware
+- Responsive tables with mobile text truncation
+- Real-time progress updates and invoice history
 
 ## Structure
 
 ```
-├── client/          # React + TypeScript + Vite
-├── service/         # Node.js + TypeScript + Express
-├── package.json     # Root package.json with workspace configuration
-├── .eslintrc.js   # Shared ESLint configuration
-└── .prettierrc.json # Shared Prettier configuration
+├── client/          # React + TypeScript + Vite + Redux Toolkit
+├── service/         # Express API with TypeScript (in-memory storage)
+├── package.json     # Workspace configuration
 ```
 
 ## Quick Start
 
-### Install Dependencies
-
 ```bash
-# Install root dependencies (ESLint, Prettier)
+# Install all dependencies
 npm install
 
-# Install client dependencies
-npm run install:client
-
-# Install service dependencies
-npm run install:service
+# Start development servers
+npm run dev:client   # React app (http://localhost:5173)
+npm run dev:service  # API server (http://localhost:3000)
 ```
 
-### Git Hooks Setup
+## Architecture
 
-Git hooks are automatically set up when you run `npm install` in the root directory. The pre-commit hook will automatically run ESLint and Prettier on staged files before each commit.
+### Frontend (Client)
 
-### Development
+- **Tech Stack:** React 18, TypeScript, Redux Toolkit, Material-UI, Vite
+- **State:** RTK Query for API calls, custom persistence middleware
+- **Components:** Feature-based architecture with shared UI components
+- **Storage:** Automatic localStorage sync via RTK middleware
 
-Run both services:
+### Backend (Service)
 
-```bash
-# Start client (http://localhost:5173)
-npm run dev:client
+- **Tech Stack:** Express.js, TypeScript, in-memory data storage
+- **API:** RESTful endpoint for song data retrieval
+- **Data:** Mock song entities with progress tracking
 
-# Start service (http://localhost:3000)
-npm run dev:service
+### Data Models
+
+```typescript
+// Song entity
+{ id, name, author, progress, lastClickProgress?, lastClickDate? }
+
+// Invoice entity
+{ id, date, author, songName, progress }
 ```
 
-## Client (`/client`)
-
-### Features
-
-- ⚛️ React 18 with TypeScript
-- ⚡ Vite for fast development
-- 🎨 Material UI components ready to use
-- 🔄 Redux Toolkit + RTK Query configured
-- 🧪 React Testing Library + Vitest
-- 📁 Import aliases (`@/` points to `src/`)
+## Development
 
 ### Commands
 
 ```bash
+# Client
 cd client
+npm test            # Run tests with Vitest
+npm run build       # Production build
 
-# Development
-npm run dev          # Start dev server
-npm run build        # Build for production
-npm run preview      # Preview production build
-
-# Testing
-npm test             # Run tests
-npm run test:ui      # Run tests with UI
-
-# Code Quality
-npm run lint         # Run ESLint
-npm run lint:fix     # Fix ESLint issues
-npm run format       # Format with Prettier
-npm run format:check # Check Prettier formatting
-```
-
-### Configuration
-
-- **Vite**: `vite.config.ts` with React plugin and import aliases
-- **TypeScript**: `tsconfig.json` with path mapping for `@/` alias
-- **ESLint**: Extends root config with React-specific rules
-- **Material UI**: Theme provider and CssBaseline configured in `main.tsx`
-- **Redux**: Store configured in `src/store/index.ts`
-
-## Service (`/service`)
-
-### Features
-
-- 🚀 Node.js with TypeScript
-- 🌐 Express.js server
-- 🧪 Mocha + Chai + Supertest for testing
-- 📁 Import aliases (`@/` points to `src/`)
-- 🔥 Hot reload with tsx
-
-### Commands
-
-```bash
+# Service
 cd service
-
-# Development
-npm run dev          # Start dev server with hot reload
-npm run build        # Build TypeScript
-npm start            # Start production server
-
-# Testing
-npm test             # Run tests
-
-# Code Quality
-npm run lint         # Run ESLint
-npm run lint:fix     # Fix ESLint issues
-npm run format       # Format with Prettier
-npm run format:check # Check Prettier formatting
+npm test            # Run API tests
+npm run build       # TypeScript build
 ```
 
-### Configuration
+### Key Features
 
-- **TypeScript**: `tsconfig.json` with path mapping for `@/` alias
-- **Express**: Basic server setup in `src/index.ts`
-- **ESLint**: Extends root config with Node.js-specific settings
-- **Testing**: Mocha configured to work with TypeScript
-
-## Shared Configuration
-
-### ESLint
-
-- Shared base configuration in root `.eslintrc.json`
-- TypeScript support with `@typescript-eslint`
-- Prettier integration
-- Client extends with React-specific rules
-- Service uses base Node.js configuration
-
-### Prettier
-
-- Consistent formatting across both projects
-- Configuration in root `.prettierrc.json`
-
-## Next Steps
-
-This is a minimal technical setup. You can now add:
-
-**Client:**
-
-- Components in `src/components/`
-- Pages/routes with React Router
-- Redux slices and RTK Query APIs
-- Material UI theme customization
-
-**Service:**
-
-- API routes in separate files
-- Database integration
-- Middleware
-- Authentication
-- Error handling
-
-**Both:**
-
-- Environment configuration
-- Docker setup
-- CI/CD pipelines
-- Additional testing utilities
+- **Progress Tracking:** Songs increment progress when invoices are issued
+- **Conditional UI:** Invoice columns appear only when invoices exist
+- **Mobile Responsive:** Text truncation on portrait orientation
+- **Persistent State:** Automatic localStorage backup and restoration
