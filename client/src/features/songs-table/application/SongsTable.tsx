@@ -15,7 +15,7 @@ import { useEffect } from 'react';
 import { useAppSelector } from '@/shared/application/hooks';
 import { SongsTableStatus } from '@/features/songs-table/application/components';
 import { useIssuedInvoiceActions } from '@/features/invoice-history/application/hooks/useIssuedInvoiceActions';
-import { TableRowCustom } from '@/shared/application/ui';
+import { TableCellCustom, TableRowCustom } from '@/shared/application/ui';
 
 const SongsTable = () => {
   const { data: fetchedSongs, isLoading, isError } = useGetSongsQuery();
@@ -95,14 +95,15 @@ const SongsTable = () => {
             </TableHead>
             <TableBody>
               {songsState.map(
-                ({ id, name, author, progress, lastClickProgress, lastClickDate }, idx) => (
-                  <TableRowCustom
-                    key={id}
-                    isLast={idx === songsState.length - 1}
-                  >
+                ({ id, name, author, progress, lastClickProgress, lastClickDate }, index) => (
+                  <TableRowCustom key={id} isLast={index === songsState.length - 1}>
                     <TableCell size="small">{id}</TableCell>
-                    <TableCell size="small">{name}</TableCell>
-                    <TableCell size="small">{author}</TableCell>
+                    <TableCellCustom size="small" truncateOnMobile>
+                      {name}
+                    </TableCellCustom>
+                    <TableCellCustom size="small" truncateOnMobile>
+                      {author}
+                    </TableCellCustom>
                     <TableCell size="small">{formatProgress(progress)}</TableCell>
                     <TableCell size="small">
                       <Button

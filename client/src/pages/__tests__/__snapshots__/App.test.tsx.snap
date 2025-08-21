@@ -79,12 +79,12 @@ exports[`matches snapshot 1`] = `
                 1
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-dsuxgy-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-putezx-MuiTableCell-root"
               >
                 Flowers
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-dsuxgy-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-putezx-MuiTableCell-root"
               >
                 Miley Cyrus
               </td>
@@ -117,12 +117,12 @@ exports[`matches snapshot 1`] = `
                 2
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-dsuxgy-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-putezx-MuiTableCell-root"
               >
                 Anti-Hero
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-dsuxgy-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-putezx-MuiTableCell-root"
               >
                 Taylor Swift
               </td>

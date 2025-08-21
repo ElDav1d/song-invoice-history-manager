@@ -1,6 +1,6 @@
 import { useAppSelector } from '@/shared/application/hooks';
 import { Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
-import { TableRowCustom } from '@/shared/application/ui';
+import { TableRowCustom, TableCellCustom } from '@/shared/application/ui';
 
 const InvoiceHistory = () => {
   const { issuedInvoices } = useAppSelector((state) => state.issuedInvoices);
@@ -36,8 +36,12 @@ const InvoiceHistory = () => {
               {issuedInvoices.map(({ id, date, author, songName, progress }, idx) => (
                 <TableRowCustom key={id} isLast={idx === issuedInvoices.length - 1}>
                   <TableCell size="small">{formatDate(date)}</TableCell>
-                  <TableCell size="small">{author}</TableCell>
-                  <TableCell size="small">{songName}</TableCell>
+                  <TableCellCustom size="small" truncateOnMobile>
+                    {author}
+                  </TableCellCustom>
+                  <TableCellCustom size="small" truncateOnMobile>
+                    {songName}
+                  </TableCellCustom>
                   <TableCell size="small">{formatProgress(progress)}</TableCell>
                 </TableRowCustom>
               ))}
