@@ -5,7 +5,9 @@ exports[`matches snapshot 1`] = `
   <header
     class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
   >
-    <h1>
+    <h1
+      class="MuiTypography-root MuiTypography-h3 css-thzt8-MuiTypography-root"
+    >
       Song Invoice History Manager
     </h1>
   </header>
@@ -16,6 +18,7 @@ exports[`matches snapshot 1`] = `
       aria-labelledby="songs-table-heading"
     >
       <h2
+        class="MuiTypography-root MuiTypography-h4 css-ue75iy-MuiTypography-root"
         id="songs-table-heading"
       >
         Songs
@@ -151,6 +154,7 @@ exports[`matches snapshot 1`] = `
       aria-labelledby="invoice-history-heading"
     >
       <h2
+        class="MuiTypography-root MuiTypography-h4 css-ue75iy-MuiTypography-root"
         id="invoice-history-heading"
       >
         Invoice History

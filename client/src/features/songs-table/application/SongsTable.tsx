@@ -1,5 +1,14 @@
 import { v4 as uuidv4 } from 'uuid';
-import { Table, TableHead, TableRow, TableCell, TableBody, Button, Paper } from '@mui/material';
+import {
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Button,
+  Paper,
+  Typography,
+} from '@mui/material';
 import { useGetSongsQuery } from '@/features/songs-table/application/hooks/songsApi';
 import { useSongsActions } from '@/features/songs-table/application/hooks/useSongsActions';
 import { useEffect } from 'react';
@@ -57,7 +66,9 @@ const SongsTable = () => {
 
   return (
     <section aria-labelledby="songs-table-heading">
-      <h2 id="songs-table-heading">Songs</h2>
+      <Typography component="h2" variant="h4" sx={{ my: 2 }} id="songs-table-heading">
+        Songs
+      </Typography>
       <SongsTableStatus
         isLoading={isLoading}
         isError={isError}

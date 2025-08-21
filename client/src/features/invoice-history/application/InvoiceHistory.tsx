@@ -1,5 +1,5 @@
 import { useAppSelector } from '@/shared/application/hooks';
-import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import { Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 
 const InvoiceHistory = () => {
   const { issuedInvoices } = useAppSelector((state) => state.issuedInvoices);
@@ -16,7 +16,9 @@ const InvoiceHistory = () => {
 
   return (
     <section aria-labelledby="invoice-history-heading">
-      <h2 id="invoice-history-heading">Invoice History</h2>
+      <Typography component="h2" variant="h4" sx={{ my: 2 }} id="invoice-history-heading">
+        Invoice History
+      </Typography>
 
       {issuedInvoices.length > 0 ? (
         <Paper>
