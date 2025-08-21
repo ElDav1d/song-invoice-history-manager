@@ -27,6 +27,8 @@ vi.mock('@/features/songs-table/application/hooks/songsApi', () => ({
 }));
 
 // Import the mocked hook after the mock
+
+// eslint-disable-next-line
 import { useGetSongsQuery } from '@/features/songs-table/application/hooks/songsApi';
 
 // Create a fresh store for each test
