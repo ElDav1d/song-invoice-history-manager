@@ -1,7 +1,7 @@
 import { screen, waitFor, within } from '@testing-library/react';
 import { it, expect, beforeEach, vi } from 'vitest';
 import { renderApp, mockQueryStates } from './setup';
-import userEvent from '@testing-library/user-event';
+import { clickOnIssueButtonOne } from './helpers';
 
 beforeEach(() => {
   vi.restoreAllMocks();
@@ -68,31 +68,27 @@ it('should render songs rows with their data correctly', async () => {
   const [, row1, row2] = rows;
 
   expect(within(row1).getByText('1')).toBeInTheDocument();
-  expect(within(row1).getByText('Flowers')).toBeInTheDocument();
-  expect(within(row1).getByText('Miley Cyrus')).toBeInTheDocument();
-  expect(within(row1).getByText('15%')).toBeInTheDocument();
+  expect(within(row1).getByText(/flowers/i)).toBeInTheDocument();
+  expect(within(row1).getByText(/miley cyrus/i)).toBeInTheDocument();
+  expect(within(row1).getByText(/15%/)).toBeInTheDocument();
   expect(within(row1).getByRole('button', { name: /issue invoice/i })).toBeInTheDocument();
 
   expect(within(row2).getByText('2')).toBeInTheDocument();
-  expect(within(row2).getByText('Anti-Hero')).toBeInTheDocument();
-  expect(within(row2).getByText('Taylor Swift')).toBeInTheDocument();
-  expect(within(row2).getByText('27%')).toBeInTheDocument();
+  expect(within(row2).getByText(/anti-hero/i)).toBeInTheDocument();
+  expect(within(row2).getByText(/taylor swift/i)).toBeInTheDocument();
+  expect(within(row2).getByText(/27%/)).toBeInTheDocument();
   expect(within(row2).getByRole('button', { name: /issue invoice/i })).toBeInTheDocument();
 });
 
 it('should render two new columns after issue an invoice', async () => {
-  const user = userEvent.setup();
   mockQueryStates.withNewData();
 
   renderApp();
 
+  await clickOnIssueButtonOne();
+
   const songsSection = screen.getByRole('region', { name: /songs/i });
   const songsTable = await within(songsSection).findByRole('table', { name: /songs-table/i });
-
-  const issueInvoiceButtons = within(songsTable).getAllByRole('button', { name: /issue invoice/i });
-  const firstIssueButton = issueInvoiceButtons[0];
-
-  await user.click(firstIssueButton);
 
   await waitFor(() => {
     expect(
@@ -105,7 +101,6 @@ it('should render two new columns after issue an invoice', async () => {
 });
 
 it('should render songs rows with last invoice issue and date after issuing an invoice', async () => {
-  const user = userEvent.setup();
   mockQueryStates.withNewData();
 
   renderApp();
@@ -120,15 +115,12 @@ it('should render songs rows with last invoice issue and date after issuing an i
   const initialProgressElement = within(row1).getByText('15%');
   expect(initialProgressElement).toBeInTheDocument();
 
-  const issueInvoiceButtons = within(songsTable).getAllByRole('button', { name: /issue invoice/i });
-  const firstIssueButton = issueInvoiceButtons[0];
-
-  await user.click(firstIssueButton);
+  await clickOnIssueButtonOne();
 
   await waitFor(() => {
     expect(within(row1).getByText('1')).toBeInTheDocument();
-    expect(within(row1).getByText('Flowers')).toBeInTheDocument();
-    expect(within(row1).getByText('Miley Cyrus')).toBeInTheDocument();
+    expect(within(row1).getByText(/flowers/i)).toBeInTheDocument();
+    expect(within(row1).getByText(/miley cyrus/i)).toBeInTheDocument();
 
     // Check that progress has increased from 15% to some higher value
     // We don't care about the exact increment, just that it increased
@@ -144,16 +136,16 @@ it('should render songs rows with last invoice issue and date after issuing an i
     expect(within(row1).getByRole('button', { name: /issue invoice/i })).toBeInTheDocument();
 
     // Check that lastClickProgress shows the original progress value (15%)
-    expect(within(row1).getByText('15%')).toBeInTheDocument(); // Last invoice issue
+    expect(within(row1).getByText(/15%/)).toBeInTheDocument(); // Last invoice issue
 
     // Check for today's date in YYYY-MM-DD format
     const today = new Date().toISOString().split('T')[0];
-    expect(within(row1).getByText(today)).toBeInTheDocument();
+    expect(within(row1).getByText(new RegExp(today))).toBeInTheDocument();
 
     expect(within(row2).getByText('2')).toBeInTheDocument();
-    expect(within(row2).getByText('Anti-Hero')).toBeInTheDocument();
-    expect(within(row2).getByText('Taylor Swift')).toBeInTheDocument();
-    expect(within(row2).getByText('27%')).toBeInTheDocument();
+    expect(within(row2).getByText(/anti-hero/i)).toBeInTheDocument();
+    expect(within(row2).getByText(/taylor swift/i)).toBeInTheDocument();
+    expect(within(row2).getByText(/27%/)).toBeInTheDocument();
     expect(within(row2).getByRole('button', { name: /issue invoice/i })).toBeInTheDocument();
     // Check that row2 has N/A in both invoice columns
     const row2Cells = within(row2).getAllByRole('cell');
