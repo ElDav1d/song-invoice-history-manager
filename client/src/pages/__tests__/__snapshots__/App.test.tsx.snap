@@ -24,7 +24,7 @@ exports[`matches snapshot 1`] = `
         Songs
       </h2>
       <div
-        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1ps6pg7-MuiPaper-root"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1r0z1p8-MuiPaper-root"
       >
         <table
           aria-label="songs-table"
@@ -109,7 +109,7 @@ exports[`matches snapshot 1`] = `
               </td>
             </tr>
             <tr
-              class="MuiTableRow-root css-1q1u3t4-MuiTableRow-root"
+              class="MuiTableRow-root css-ww7i79-MuiTableRow-root"
             >
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-dsuxgy-MuiTableCell-root"

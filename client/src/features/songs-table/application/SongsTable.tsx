@@ -15,22 +15,23 @@ import { useEffect } from 'react';
 import { useAppSelector } from '@/shared/application/hooks';
 import { SongsTableStatus } from '@/features/songs-table/application/components';
 import { useIssuedInvoiceActions } from '@/features/invoice-history/application/hooks/useIssuedInvoiceActions';
+import { TableRowCustom } from '@/shared/application/ui';
 
 const SongsTable = () => {
   const { data: fetchedSongs, isLoading, isError } = useGetSongsQuery();
   const { issueInvoice, addSongs } = useSongsActions();
   const { addIssuedInvoice } = useIssuedInvoiceActions();
-  const { songs: sonsgsState } = useAppSelector((state) => state.songs);
+  const { songs: songsState } = useAppSelector((state) => state.songs);
 
-  const hasIssuedInvoices = sonsgsState?.some(
+  const hasIssuedInvoices = songsState?.some(
     (song) => song.lastClickDate && song.lastClickProgress !== undefined
   );
 
   useEffect(() => {
-    if (sonsgsState.length === 0 && fetchedSongs) {
+    if (songsState.length === 0 && fetchedSongs) {
       addSongs(fetchedSongs);
     }
-  }, [sonsgsState, addSongs]);
+  }, [songsState, addSongs]);
 
   // TODO: move to domain object
   const handleIssueInvoice = (
@@ -72,10 +73,10 @@ const SongsTable = () => {
       <SongsTableStatus
         isLoading={isLoading}
         isError={isError}
-        isEmpty={!isLoading && !isError && sonsgsState?.length === 0}
+        isEmpty={!isLoading && !isError && songsState?.length === 0}
       />
-      {sonsgsState && sonsgsState.length > 0 && !isLoading && !isError && (
-        <Paper>
+      {songsState && songsState.length > 0 && !isLoading && !isError && (
+        <Paper sx={{ overflowX: 'auto', p: 2 }}>
           <Table aria-label="songs-table">
             <TableHead>
               <TableRow>
@@ -93,9 +94,12 @@ const SongsTable = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {sonsgsState.map(
-                ({ id, name, author, progress, lastClickProgress, lastClickDate }) => (
-                  <TableRow key={id}>
+              {songsState.map(
+                ({ id, name, author, progress, lastClickProgress, lastClickDate }, idx) => (
+                  <TableRowCustom
+                    key={id}
+                    isLast={idx === songsState.length - 1}
+                  >
                     <TableCell size="small">{id}</TableCell>
                     <TableCell size="small">{name}</TableCell>
                     <TableCell size="small">{author}</TableCell>
@@ -115,7 +119,7 @@ const SongsTable = () => {
                         <TableCell size="small">{formatDate(lastClickDate)}</TableCell>
                       </>
                     )}
-                  </TableRow>
+                  </TableRowCustom>
                 )
               )}
             </TableBody>
