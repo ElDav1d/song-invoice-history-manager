@@ -84,13 +84,13 @@ const SongsTable = () => {
                 <TableCell size="small">Song Name</TableCell>
                 <TableCell size="small">Author</TableCell>
                 <TableCell size="small">Progress</TableCell>
-                <TableCell aria-label="invoice-button-placeholder"></TableCell>
                 {hasIssuedInvoices && (
                   <>
                     <TableCell size="small">Last Invoice Issue</TableCell>
                     <TableCell size="small">Issuance Date</TableCell>
                   </>
                 )}
+                <TableCell aria-label="invoice-button-placeholder"></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -105,6 +105,13 @@ const SongsTable = () => {
                       {author}
                     </TableCellCustom>
                     <TableCell size="small">{formatProgress(progress)}</TableCell>
+
+                    {hasIssuedInvoices && (
+                      <>
+                        <TableCell size="small">{formatProgress(lastClickProgress)}</TableCell>
+                        <TableCell size="small">{formatDate(lastClickDate)}</TableCell>
+                      </>
+                    )}
                     <TableCell size="small">
                       <Button
                         variant="contained"
@@ -114,12 +121,6 @@ const SongsTable = () => {
                         Issue Invoice
                       </Button>
                     </TableCell>
-                    {hasIssuedInvoices && (
-                      <>
-                        <TableCell size="small">{formatProgress(lastClickProgress)}</TableCell>
-                        <TableCell size="small">{formatDate(lastClickDate)}</TableCell>
-                      </>
-                    )}
                   </TableRowCustom>
                 )
               )}

@@ -149,8 +149,8 @@ it('should render songs rows with last invoice issue and date after issuing an i
     expect(within(row2).getByRole('button', { name: /issue invoice/i })).toBeInTheDocument();
     // Check that row2 has N/A in both invoice columns
     const row2Cells = within(row2).getAllByRole('cell');
-    const lastInvoiceIssueCell = row2Cells[5]; // Last Invoice Issue column
-    const lastIssueDateCell = row2Cells[6]; // Last Issue Date column
+    const lastInvoiceIssueCell = row2Cells[4]; // Last Invoice Issue column
+    const lastIssueDateCell = row2Cells[5]; // Last Issue Date column
     expect(lastInvoiceIssueCell).toHaveTextContent('N/A');
     expect(lastIssueDateCell).toHaveTextContent('N/A');
   });
