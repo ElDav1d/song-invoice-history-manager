@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import songsApi from '@/features/songs-table/application/hooks/songsApi';
 import songsReducer from '@/features/songs-table/application/store/slice';
+import issuedInvoicesReducer from '@/features/invoice-history/application/store/slice';
 import App from '../App';
 import { mockedSongs } from './mocks';
 
@@ -34,6 +35,7 @@ const createTestStore = () => {
     reducer: {
       [songsApi.reducerPath]: songsApi.reducer,
       songs: songsReducer,
+      issuedInvoices: issuedInvoicesReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(songsApi.middleware),
   });

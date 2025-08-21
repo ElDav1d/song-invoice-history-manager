@@ -1,10 +1,11 @@
 import { useAppDispatch } from '@/shared/application/hooks';
 import { addNewSongs, issueNewInvoice } from '@/features/songs-table/application/store/slice';
-import { Song } from '../../domain/entities/Song';
+import { Song } from '@/features/songs-table/domain/entities/Song';
 
 export interface IssueInvoicePayload {
   id: string;
   progressAtIssue: number;
+  dateIssued: string;
 }
 
 export const useSongsActions = () => {
@@ -14,8 +15,8 @@ export const useSongsActions = () => {
     dispatch(addNewSongs(songs));
   };
 
-  const issueInvoice = ({ id, progressAtIssue }: IssueInvoicePayload) => {
-    dispatch(issueNewInvoice({ id, progressAtIssue }));
+  const issueInvoice = ({ id, progressAtIssue, dateIssued }: IssueInvoicePayload) => {
+    dispatch(issueNewInvoice({ id, progressAtIssue, dateIssued }));
   };
 
   return {

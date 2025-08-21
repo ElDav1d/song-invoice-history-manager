@@ -1,19 +1,49 @@
-import { Paper, Table, TableCell, TableHead, TableRow } from '@mui/material';
+import { useAppSelector } from '@/shared/application/hooks';
+import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 
 const InvoiceHistory = () => {
+  const { issuedInvoices } = useAppSelector((state) => state.issuedInvoices);
+
+  // TODO: move to domain object
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toISOString().split('T')[0];
+  };
+
+  const formatProgress = (progress: number) => {
+    return `${Math.round(progress * 100)}%`;
+  };
+
   return (
     <section aria-labelledby="invoice-history-heading">
       <h2 id="invoice-history-heading">Invoice History</h2>
-      <Table aria-label="invoice-history-table" component={Paper}>
-        <TableHead>
-          <TableRow>
-            <TableCell size="small">Date</TableCell>
-            <TableCell size="small">Author</TableCell>
-            <TableCell size="small">Song Name</TableCell>
-            <TableCell size="small">Progress</TableCell>
-          </TableRow>
-        </TableHead>
-      </Table>
+
+      {issuedInvoices.length > 0 ? (
+        <Paper>
+          <Table aria-label="invoice-history-table">
+            <TableHead>
+              <TableRow>
+                <TableCell size="small">Date</TableCell>
+                <TableCell size="small">Author</TableCell>
+                <TableCell size="small">Song Name</TableCell>
+                <TableCell size="small">Progress</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {issuedInvoices.map(({ id, date, author, songName, progress }) => (
+                <TableRow key={id}>
+                  <TableCell size="small">{formatDate(date)}</TableCell>
+                  <TableCell size="small">{author}</TableCell>
+                  <TableCell size="small">{songName}</TableCell>
+                  <TableCell size="small">{formatProgress(progress)}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Paper>
+      ) : (
+        <h3>No Issued Invoices</h3>
+      )}
     </section>
   );
 };

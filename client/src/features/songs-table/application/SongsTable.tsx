@@ -1,14 +1,16 @@
+import { v4 as uuidv4 } from 'uuid';
 import { Table, TableHead, TableRow, TableCell, TableBody, Button, Paper } from '@mui/material';
-
 import { useGetSongsQuery } from '@/features/songs-table/application/hooks/songsApi';
 import { useSongsActions } from '@/features/songs-table/application/hooks/useSongsActions';
 import { useEffect } from 'react';
 import { useAppSelector } from '@/shared/application/hooks';
 import { SongsTableStatus } from '@/features/songs-table/application/components';
+import { useIssuedInvoiceActions } from '@/features/invoice-history/application/hooks/useIssuedInvoiceActions';
 
 const SongsTable = () => {
   const { data: fetchedSongs, isLoading, isError } = useGetSongsQuery();
   const { issueInvoice, addSongs } = useSongsActions();
+  const { addIssuedInvoice } = useIssuedInvoiceActions();
   const { songs: sonsgsState } = useAppSelector((state) => state.songs);
 
   const hasIssuedInvoices = sonsgsState?.some(
@@ -21,15 +23,33 @@ const SongsTable = () => {
     }
   }, [sonsgsState, addSongs]);
 
-  const handleIssueInvoice = (id: string, progressAtIssue: number) => {
-    issueInvoice({ id, progressAtIssue });
+  // TODO: move to domain object
+  const handleIssueInvoice = (
+    id: string,
+    progressAtIssue: number,
+    name: string,
+    author: string
+  ) => {
+    const dateIssued = new Date().toISOString();
+
+    issueInvoice({ id, progressAtIssue, dateIssued });
+
+    addIssuedInvoice({
+      id: uuidv4(),
+      progress: progressAtIssue,
+      date: dateIssued,
+      songName: name,
+      author,
+    });
   };
 
+  // TODO: move to domain object
   const formatProgress = (progress: number | undefined) => {
     if (progress === undefined) return 'N/A';
     return `${Math.round(progress * 100)}%`;
   };
 
+  // TODO: move to domain
   const formatDate = (dateString: string | undefined) => {
     if (!dateString) return 'N/A';
     return new Date(dateString).toISOString().split('T')[0];
@@ -44,48 +64,52 @@ const SongsTable = () => {
         isEmpty={!isLoading && !isError && sonsgsState?.length === 0}
       />
       {sonsgsState && sonsgsState.length > 0 && !isLoading && !isError && (
-        <Table aria-label="songs-table" component={Paper}>
-          <TableHead>
-            <TableRow>
-              <TableCell size="small">ID</TableCell>
-              <TableCell size="small">Song Name</TableCell>
-              <TableCell size="small">Author</TableCell>
-              <TableCell size="small">Progress</TableCell>
-              <TableCell aria-label="invoice-button-placeholder"></TableCell>
-              {hasIssuedInvoices && (
-                <>
-                  <TableCell size="small">Last Invoice Issue</TableCell>
-                  <TableCell size="small">Issuance Date</TableCell>
-                </>
-              )}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {sonsgsState.map(({ id, name, author, progress, lastClickProgress, lastClickDate }) => (
-              <TableRow key={id}>
-                <TableCell size="small">{id}</TableCell>
-                <TableCell size="small">{name}</TableCell>
-                <TableCell size="small">{author}</TableCell>
-                <TableCell size="small">{formatProgress(progress)}</TableCell>
-                <TableCell size="small">
-                  <Button
-                    variant="contained"
-                    size="small"
-                    onClick={() => handleIssueInvoice(id, progress)}
-                  >
-                    Issue Invoice
-                  </Button>
-                </TableCell>
+        <Paper>
+          <Table aria-label="songs-table">
+            <TableHead>
+              <TableRow>
+                <TableCell size="small">ID</TableCell>
+                <TableCell size="small">Song Name</TableCell>
+                <TableCell size="small">Author</TableCell>
+                <TableCell size="small">Progress</TableCell>
+                <TableCell aria-label="invoice-button-placeholder"></TableCell>
                 {hasIssuedInvoices && (
                   <>
-                    <TableCell size="small">{formatProgress(lastClickProgress)}</TableCell>
-                    <TableCell size="small">{formatDate(lastClickDate)}</TableCell>
+                    <TableCell size="small">Last Invoice Issue</TableCell>
+                    <TableCell size="small">Issuance Date</TableCell>
                   </>
                 )}
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHead>
+            <TableBody>
+              {sonsgsState.map(
+                ({ id, name, author, progress, lastClickProgress, lastClickDate }) => (
+                  <TableRow key={id}>
+                    <TableCell size="small">{id}</TableCell>
+                    <TableCell size="small">{name}</TableCell>
+                    <TableCell size="small">{author}</TableCell>
+                    <TableCell size="small">{formatProgress(progress)}</TableCell>
+                    <TableCell size="small">
+                      <Button
+                        variant="contained"
+                        size="small"
+                        onClick={() => handleIssueInvoice(id, progress, name, author)}
+                      >
+                        Issue Invoice
+                      </Button>
+                    </TableCell>
+                    {hasIssuedInvoices && (
+                      <>
+                        <TableCell size="small">{formatProgress(lastClickProgress)}</TableCell>
+                        <TableCell size="small">{formatDate(lastClickDate)}</TableCell>
+                      </>
+                    )}
+                  </TableRow>
+                )
+              )}
+            </TableBody>
+          </Table>
+        </Paper>
       )}
     </section>
   );
