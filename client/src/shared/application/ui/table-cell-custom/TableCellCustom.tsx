@@ -14,22 +14,24 @@ const TableCellCustom: React.FC<TableCellCustomProps> = ({
   children,
   ...props
 }) => {
-  const handleMobileTruncation = () => {
+  const CSS_OVERRIDE_TEXT_TRUNCATION = {
+    '@media (max-width: 768px) and (orientation: portrait)': {
+      maxWidth: '80px',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+    },
+  };
+
+  const overrideCSS = () => {
     if (truncateOnMobile) {
-      return {
-        '@media (max-width: 768px) and (orientation: portrait)': {
-          maxWidth: '80px',
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
-        },
-      };
+      return CSS_OVERRIDE_TEXT_TRUNCATION;
     }
     return null;
   };
 
   return (
-    <TableCell {...props} sx={{ ...(props.sx || {}), ...handleMobileTruncation() }}>
+    <TableCell {...props} sx={{ ...(props.sx || {}), ...overrideCSS() }}>
       {children}
     </TableCell>
   );

@@ -10,15 +10,19 @@ interface TableRowCustomProps extends TableRowProps {
  * Usage: <TableRowCustom isLast={idx === arr.length - 1} ... />
  */
 const TableRowCustom: React.FC<TableRowCustomProps> = ({ isLast, children, ...props }) => {
-  const handleBorder = () => {
+  const CSS_OVERRIDE_BORDER_DELETION = {
+    '& td, & th': { borderBottom: 0 },
+  };
+
+  const overrideCSS = () => {
     if (isLast) {
-      return { '& td, & th': { borderBottom: 0 } };
+      return CSS_OVERRIDE_BORDER_DELETION;
     }
     return null;
   };
 
   return (
-    <TableRow {...props} sx={{ ...(props.sx || {}), ...handleBorder() }}>
+    <TableRow {...props} sx={{ ...(props.sx || {}), ...overrideCSS() }}>
       {children}
     </TableRow>
   );
