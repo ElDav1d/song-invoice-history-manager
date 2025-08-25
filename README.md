@@ -2,6 +2,12 @@
 
 A React + Express monorepo for tracking music production progress and managing invoice generation for songs.
 
+## 📋 Technical Analysis & Presentation
+
+**[📄 Technical Analysis Presentation](presentation/Song%20Invoice%20History%20Manager%20-%20Technical%20Analisys.pdf)**
+
+The presentation document serves as both technical documentation and presentation material for stakeholders and development teams.
+
 ## Features
 
 - Track song progress and issue invoices at completion milestones
@@ -68,10 +74,3 @@ cd service
 npm test            # Run API tests
 npm run build       # TypeScript build
 ```
-
-### Key Features
-
-- **Progress Tracking:** Songs increment progress when invoices are issued
-- **Conditional UI:** Invoice columns appear only when invoices exist
-- **Mobile Responsive:** Text truncation on portrait orientation
-- **Persistent State:** Automatic localStorage backup and restoration
