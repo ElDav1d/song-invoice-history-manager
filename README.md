@@ -4,7 +4,7 @@ A React + Express monorepo for tracking music production progress and managing i
 
 ## 📋 Technical Analysis & Presentation
 
-**[📄 Technical Analysis Presentation](presentation/Song%20Invoice%20History%20Manager%20-%20Technical%20Analisys.pdf)**
+**Technical Analysis Presentation:** `presentation/Song Invoice History Manager - Technical Analisys.pdf`
 
 The presentation document serves as both technical documentation and presentation material for stakeholders and development teams.
 
